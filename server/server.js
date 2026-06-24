@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(express.json())
-app.get('/', locationRoutes)
+app.use('/', locationRoutes)
 
 app.use('/events', eventRoutes)
 

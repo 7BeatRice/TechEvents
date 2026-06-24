@@ -1,8 +1,8 @@
 import express from 'express'
-import LocationController from '../controller/locations'
+import LocationController from '../controller/locations.js'
 
 
 const router = express.Router()
 router.get('/', LocationController.getLocations)
 
-export default locationData
+export default router

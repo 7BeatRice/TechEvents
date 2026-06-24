@@ -14,7 +14,7 @@ const Event = (props) => {
                 setEvent(eventData)
             }
             catch (error) {
-                throw error
+               console.log(error)
             }
         }) ()
     }, [])
@@ -26,7 +26,7 @@ const Event = (props) => {
                 setTime(result)
             }
             catch (error) {
-                throw error
+                console.log(error)
             }
         }) ()
     }, [event])
@@ -39,7 +39,8 @@ const Event = (props) => {
                 dates.formatNegativeTimeRemaining(remaining, event.id)
             }
             catch (error) {
-                throw error
+                console.log(error)
+                
             }
         }) ()
     }, [event])
