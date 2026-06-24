@@ -62,6 +62,7 @@ const createEventTable = async() =>{
     CREATE TABLE IF NOT EXISTS events(
         id SERIAL PRIMARY KEY,
         eventName VARCHAR(255) NOT NULL,
+        image TEXT NOT NULL,
         location VARCHAR(255) NOT NULL,
         learnMore TEXT NOT NULL,
         dateAndTime TIMESTAMP NOT NULL,
@@ -104,7 +105,7 @@ const seedEventTable = async () =>{
     await createEventTable()
     eventsData.forEach((event) => {
         const insertQuery  = {
-            text: 'INSERT INTO events (id, eventName, location, dateAndTime, timeUntil, timePassed) VALUES ($1, $2, $3, $4, $5, $6)'
+            text: 'INSERT INTO events (id, eventName, image, location, dateAndTime, timeUntil, timePassed) VALUES ($1, $2, $3, $4, $5, $6, $7)'
 
         }
         const dynamicData = generateData(event.dateAndTime)
@@ -112,6 +113,7 @@ const seedEventTable = async () =>{
         const values = [
             event.id,
             event.eventName,
+            event.image,
             event.location,
             event.learnMore,
             event.dateAndTime,
