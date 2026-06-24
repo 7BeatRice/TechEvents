@@ -5,4 +5,4 @@ import LocationController from '../controller/locations'
 const router = express.Router()
 router.get('/', LocationController.getLocations)
 
-export default locationData
+export default router

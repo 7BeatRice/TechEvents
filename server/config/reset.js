@@ -71,7 +71,7 @@ const createEventTable = async() =>{
     )
     `
     try {
-        const response =await pool.elementquery(createEventTableQuery)
+        const response =await pool.query(createEventTableQuery)
         console.log("CREATED EVENT TABLE SUCESSFULLY!")
     }
     catch(err){
@@ -83,7 +83,7 @@ const seedLocationTable = async() => {
     await createLocationTable()
     locationData.forEach( (location) => {
         const insertQuery  = {
-            text: 'INSERT INTO events (id, location) VALUES ($1, $2)'
+            text: 'INSERT INTO locations (id, location) VALUES ($1, $2)'
         }
         const values = [
             location.id,
@@ -105,7 +105,7 @@ const seedEventTable = async () =>{
     await createEventTable()
     eventsData.forEach((event) => {
         const insertQuery  = {
-            text: 'INSERT INTO events (id, eventName, image, location, dateAndTime, timeUntil, timePassed) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+            text: 'INSERT INTO events (id, eventName, image, location, learnMore, dateAndTime, timeUntil, timePassed) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)'
 
         }
         const dynamicData = generateData(event.dateAndTime)

@@ -6,4 +6,4 @@ const router = express.Router()
 router.get('/events', EventController.getEvents)
 router.get('/:eventLocation', EventController.getEventByLocation)
 
-export default Router
+export default router
