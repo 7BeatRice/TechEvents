@@ -1,8 +1,8 @@
 import React from 'react'
 import { useRoutes, Link } from 'react-router-dom'
-import Locations from './pages/Locations'
-import LocationEvents from './pages/LocationEvents'
-//import Events from './pages/Events'
+import Locations from './pages/Locations.jsx'
+import LocationEvents from './pages/LocationEvents.jsx'
+import Event from './components/Event.jsx'
 import './App.css'
 
 const App = () => {
@@ -12,24 +12,29 @@ const App = () => {
       element: <Locations />
     },
     {
-      path: '/echolounge',
+      path: '/San Francisco, CA',
       element: <LocationEvents index={1} />
     },
     {
-      path: '/houseofblues',
+      path: '/Silicon Valley, CA',
       element: <LocationEvents index={2} />
     },
     {
-      path: '/pavilion',
+      path: '/Austin, TX',
       element: <LocationEvents index={3} />
     },
     {
-      path: '/americanairlines',
+      path: '/New York, NY',
       element: <LocationEvents index={4} />
     },
     {
+      path: '/Las Vegas, NV',
+      element: <LocationEvents index={5} />
+    },
+
+    {
       path: '/events',
-      element: <Events />
+      element: <Event />
     }
   ])
 

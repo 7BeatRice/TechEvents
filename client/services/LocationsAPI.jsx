@@ -1,7 +1,8 @@
-const getAllLocations = async () =>{
+const getAllLocations = async () =>
+    {
     try{
          const response = await fetch("http://localhost:3000/")
-          const data =await reponse.json()
+          const data =await response.json()
           console.log("Successfully fetched events ")
           return data
     }
@@ -10,4 +11,4 @@ const getAllLocations = async () =>{
     }
 
 }
-export default getAllLocations
+export default {getAllLocations}
