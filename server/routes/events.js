@@ -4,6 +4,7 @@ import EventController from '../controller/events'
 
 const router = express.Router()
 router.get('/events', EventController.getEvents)
+//The colon acts has a variable so anything after the / would trigger
 router.get('/:eventLocation', EventController.getEventByLocation)
 
 export default router
