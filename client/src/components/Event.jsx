@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import '../css/Event.css'
 import EventsAPI from '../../services/EventsAPI'
+import dates from  '../../services/DateFormat.jsx'
 const Event = (props) => {
 
     const [event, setEvent] = useState([])
-    const [time, setTime] = useState([])
     const [remaining, setRemaining] = useState([])
+    const [passed, setPassed] = useState([])
+    const [time, setTime] = useState([])
 
     useEffect(() => {
         (async () => {
+            
             try {
-                const eventData = await EventsAPI.getEventsByLocation(props.location)
-                setEvent(eventData)
+                const eventData = await EventsAPI.getEventById(props.id)
+                await setEvent(eventData[0])
             }
             catch (error) {
-                throw error
+                console.error("ERROR: eventsAPI.getEventById not working")
             }
         }) ()
     }, [])
@@ -22,11 +25,13 @@ const Event = (props) => {
     useEffect(() => {
         (async () => {
             try {
-                const result = await dates.formatTime(event.dateAndTime)
-                setTime(result)
+                const newTime = new Date(event.dateandtime).toString()
+                const newRemaining = (await dates.generateDate(event.dateandtime)).remaining
+                setRemaining(newRemaining)
+                setTime(newTime)
             }
             catch (error) {
-                throw error
+                console.error("ERROR: Error formating event's time")
             }
         }) ()
     }, [event])
@@ -34,12 +39,11 @@ const Event = (props) => {
     useEffect(() => {
         (async () => {
             try {
-                const timeRemaining = await dates.formatRemainingTime(event.timeUntil)
-                setRemaining(timeRemaining)
-                dates.formatNegativeTimeRemaining(remaining, event.id)
+                const hasPassed = await dates.generateDate(event.dateandtime).timepassed
+                setPassed(hasPassed)
             }
             catch (error) {
-                throw error
+                console.error("Error: error determining if time has passed")
             }
         }) ()
     }, [event])
@@ -50,8 +54,8 @@ const Event = (props) => {
 
             <div className='event-information-overlay'>
                 <div className='text'>
-                    <h3>{event.eventName}</h3>
-                    <p><i className="fa-regular fa-calendar fa-bounce"></i> {event.dateAndTime} <br /> {time}</p>
+                    <h3>{event.eventname}</h3>
+                    <p><i className="fa-regular fa-calendar fa-bounce"></i> {time}</p>
                     <p id={`remaining-${event.id}`}>{remaining}</p>
                 </div>
             </div>

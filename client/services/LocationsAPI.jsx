@@ -1,9 +1,9 @@
 const getAllLocations = async () =>
     {
     try{
-         const response = await fetch("http://localhost:3000/")
+         const response = await fetch("/locations")
           const data =await response.json()
-          console.log("Successfully fetched events ")
+          console.log("Successfully fetched Locations ")
           return data
     }
     catch(error){

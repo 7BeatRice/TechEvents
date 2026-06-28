@@ -2,7 +2,7 @@ import React from 'react'
 import { useRoutes, Link } from 'react-router-dom'
 import Locations from './pages/Locations.jsx'
 import LocationEvents from './pages/LocationEvents.jsx'
-import Event from './components/Event.jsx'
+import AllEvents from './pages/AllEvents.jsx'
 import './App.css'
 
 const App = () => {
@@ -12,31 +12,29 @@ const App = () => {
       element: <Locations />
     },
     {
-      path: '/San Francisco, CA',
+      path: '/san-francisco',
+      element: <LocationEvents index={0} />
+    },
+    {
+      path: '/silicon-valley',
       element: <LocationEvents index={1} />
     },
     {
-      path: '/Silicon Valley, CA',
+      path: '/austin',
       element: <LocationEvents index={2} />
     },
     {
-      path: '/Austin, TX',
+      path: '/new-york',
       element: <LocationEvents index={3} />
     },
     {
-      path: '/New York, NY',
+      path: '/las-vagas',
       element: <LocationEvents index={4} />
     },
     {
-      path: '/Las Vegas, NV',
-      element: <LocationEvents index={5} />
-    },
-
-    {
-      path: '/events',
-      element: <Event />
-    }
-  ])
+      path: '/all-events',
+      element: <AllEvents />
+    }]);
 
   return (
     <div className='app'>
@@ -46,7 +44,7 @@ const App = () => {
 
         <div className='header-buttons'>
           <Link to='/' role='button'>Home</Link>
-          <Link to='/events' role='button'>Events</Link>
+          <Link to='/all-events' role='button'>Events</Link>
         </div>
       </header>
 

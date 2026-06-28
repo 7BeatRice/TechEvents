@@ -4,7 +4,7 @@ import '../css/LocationEvents.css'
 import LocationsAPI from '../../services/LocationsAPI'
 import EventsAPI from '../../services/EventsAPI'
 
-const LocationEvents = ({index}) => {
+const AllEvents = () => {
     
     const [location, setLocation] = useState([])
     const [events, setEvents] = useState([])
@@ -12,11 +12,10 @@ const LocationEvents = ({index}) => {
         useEffect(() => {
             (async () => {
                 try {
-                    const locations = await LocationsAPI.getAllLocations()
-                    const locationMatched = locations[index]
-                    setLocation(locationMatched)
-                    const events = await EventsAPI.getEventsByLocations(locationMatched)
-                    setEvents(events)
+
+                    const eventsData = await EventsAPI.getAllEvents()
+                    setEvents(eventsData)
+                    console.log(events)
                 }
                 catch (error) {
                     console.log({error: error.message})
@@ -28,19 +27,24 @@ const LocationEvents = ({index}) => {
     return (
         <div className='location-events'>
             <header>
-                <div className='location-image'>
-                    <img src={location.image} />
+                <div className='filter-drop-down'>
+                    <button className='drop-down-btn'>Show events at ...</button>
+                    <div className='drop-down-options'>
+                        <a href='san-francisco'>San Francisco, CA</a>
+                        <a href='silicon-valley'>Silicon Valley, CA</a>
+                        <a href='austin'>Austin, TX</a>
+                        <a href='new-york'>New York, NY</a>
+                        <a href='las-vagas'>Las Vegas, NV</a>
+                    </div>
                 </div>
 
-                <div className='location-info'>
-                    <h2>{location.location}</h2>
-                    <p>Tech Events at {location.location}</p>
+                <div className='get-all-events'>
+                    <button className='get-all-events-button'>All Events</button>
                 </div>
             </header>
 
             <main>
                 {
-                    console.log("Raw events array data:", events),
                     events && events.length > 0 ? events.map((event, index) =>
                         <Event
                             key={event.id}
@@ -56,4 +60,4 @@ const LocationEvents = ({index}) => {
     )
 }
 
-export default LocationEvents
+export default AllEvents

@@ -4,6 +4,7 @@ import favicon from 'serve-favicon'
 import dotenv from 'dotenv'
 import eventRouter from './routes/events.js'
 import locationRouter from './routes/locations.js'
+import cors from 'cors'
 
 
 
@@ -15,10 +16,10 @@ const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
-app.use('/:eventLocation', eventRouter)
 app.use('/events', eventRouter)
-app.use('/',locationRouter)
+app.use('/locations/',locationRouter)
 
 
 if (process.env.NODE_ENV === 'development') {

@@ -3,38 +3,6 @@ import './dotenv.js'
 import eventsData from '../data/eventData.js'
 import locationData from '../data/locationData.js'
 
-const generateData = (dateAndTime) => {
-    const currTime = new Date()
-    dateAndTime = new Date(dateAndTime)
-    const timeDiff = dateAndTime - currTime
-    let hasPassed = false
-    if (timeDiff < 0){
-        hasPassed = true
-         return{
-        timeUntil: `0 days 0 hours 0 minutes 0 seconds`,
-        timepassed: hasPassed
-     }
-
-    }
-
-    const msPerSecond = 1000;
-    const msPerMinute = msPerSecond * 60;
-    const msPerHour = msPerMinute * 60;
-    const msPerDay = msPerHour * 24;
-
-    const days = Math.floor(timeDiff / msPerDay);
-    const hours = Math.floor((timeDiff % msPerDay) / msPerHour);
-    const minutes = Math.floor((timeDiff % msPerHour) / msPerMinute);
-    const seconds = Math.floor((timeDiff % msPerMinute) / msPerSecond);
-
-     return{
-        timeUntil: `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
-        timepassed: hasPassed
-     }
-
-
-
-}
 
 const createLocationTable = async() =>{
     const createLocationTableQuery = `
@@ -42,7 +10,9 @@ const createLocationTable = async() =>{
 
         CREATE TABLE IF NOT EXISTS locations(
             id SERIAL PRIMARY KEY,
-            location VARCHAR(255) NOT NULL 
+            URLName VARCHAR(255) NOT NULL,
+            location VARCHAR(255) NOT NULL,
+            image TEXT NOT NULL
 
         )
     `
@@ -65,9 +35,7 @@ const createEventTable = async() =>{
         image TEXT NOT NULL,
         location VARCHAR(255) NOT NULL,
         learnMore TEXT NOT NULL,
-        dateAndTime TIMESTAMP NOT NULL,
-        timeUntil INTERVAL NOT NULL,
-        timePassed BOOLEAN NOT NULL
+        dateAndTime TIMESTAMP NOT NULL
     )
     `
     try {
@@ -83,11 +51,13 @@ const seedLocationTable = async() => {
     await createLocationTable()
     locationData.forEach( (location) => {
         const insertQuery  = {
-            text: 'INSERT INTO locations (id, location) VALUES ($1, $2)'
+            text: 'INSERT INTO locations (id, urlname, location, image) VALUES ($1, $2, $3, $4)'
         }
         const values = [
             location.id,
-            location.location
+            location.URLName,
+            location.location,
+            location.image
         ]
 
           pool.query(insertQuery, values, (err, res) => {
@@ -105,10 +75,9 @@ const seedEventTable = async () =>{
     await createEventTable()
     eventsData.forEach((event) => {
         const insertQuery  = {
-            text: 'INSERT INTO events (id, eventName, image, location, learnMore, dateAndTime, timeUntil, timePassed) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)'
+            text: 'INSERT INTO events (id, eventName, image, location, learnMore, dateAndTime) VALUES ($1, $2, $3, $4, $5, $6)'
 
         }
-        const dynamicData = generateData(event.dateAndTime)
 
         const values = [
             event.id,
@@ -117,8 +86,6 @@ const seedEventTable = async () =>{
             event.location,
             event.learnMore,
             event.dateAndTime,
-            dynamicData.timeUntil,
-            dynamicData.timepassed
         ]
 
         
